@@ -41,5 +41,12 @@ class Button():
             if pygame.mouse.get_pressed()[0]:
                 if self.rect.collidepoint(x, y):
                     self.parent.chose_the_winner()
+    
+    def click3(self,event):
+        x, y = pygame.mouse.get_pos()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.mouse.get_pressed()[0]:
+                if self.rect.collidepoint(x, y):
+                    self.parent.chose_the_winner()
 
 

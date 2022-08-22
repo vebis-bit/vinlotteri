@@ -3,6 +3,9 @@ import sys
 import time
 import pygame as py
 import math
+import os
+from python_version.button import Button
+
 
 py.init()
 py.mixer.init()
@@ -79,7 +82,7 @@ def chose_winner(font, screen, bg, width):
     winner = 0
     teller = 0
     for i in range(21):
-        remove_one_number(font, screen, bg, width, 1)
+        remove_one_number(font, screen, bg, width, 0.1)
 
     while winner < winners:
         teller += 1
@@ -95,10 +98,10 @@ def chose_winner(font, screen, bg, width):
 
 
         if teller % 5 == 0:
-            remove_one_number(font, screen, bg, width, 1)
+            remove_one_number(font, screen, bg, width, 0.1)
         
         elif teller == 3 or teller == 6:
-            joker_card(font, screen, bg, width, 1)
+            joker_card(font, screen, bg, width, 0.1)
             
         else:    
             print(f"vinnertallene er {lottery_winners}")
@@ -110,7 +113,6 @@ def chose_winner(font, screen, bg, width):
                         info = (winner, key, w)
                         print(key)
                         ranking.add(info)
-                        print("inne")
                             
                     else:
                         text4 = " Ingen hadde det loddet"
@@ -123,6 +125,7 @@ def chose_winner(font, screen, bg, width):
         if winner != winners:
             text3 = "EN TIL, EN TIL, VI REKKER EN TIL"
             bli_text_to_screen(text4,font, screen, bg, width, 200)
+            show_tickets(font, screen, bg)
             py.display.update()
             time.sleep(1)
             bli_text_to_screen(text3,font, screen, bg, width, 300)
@@ -134,14 +137,15 @@ def chose_winner(font, screen, bg, width):
 
 
 def show_pygame():
-    py.mixer.music.load("python_version/filer/En_Til.mp3")
+    print(os.path.abspath(os.getcwd()))
+    py.mixer.music.load(os.path.abspath(os.getcwd())+"/python_version/filer/En_Til.mp3")
     py.mixer.music.set_volume(1)
     py.mixer.music.play()
     teller = 0
     size = width, hight = 1500, 1000
     font = py.font.Font('freesansbold.ttf', 40)
     screen = py.display.set_mode(size)
-    bg = py.image.load("python_version/filer/vinbg.jpg")
+    bg = py.image.load(os.path.abspath(os.getcwd())+"/python_version/filer/vinbg.jpg")
     has_won = False
     py.display.set_caption('VINLOTTERIET')
 
@@ -157,7 +161,11 @@ def show_pygame():
                 print(ranking)
             if teller != 0:
                 blit_winner(font,screen,bg,width, hight)
-                
+            if teller >= 2:
+                button = Button("text",(width,hight),font=30,bg="navy")
+                button.click2(event)
+                button.show()
+                py.display.update()
             
             
 def bli_text_to_screen(text,font, screen, bg, width, hight = 0):
@@ -208,7 +216,7 @@ def joker_card(font, screen, bg, width, sleep):
     bli_text_to_screen(text1,font, screen, bg, width+100, 100)
     show_tickets(font, screen, bg)
     py.display.update()
-    time.sleep(10)
+    time.sleep(sleep)
     spiller1 = list(choises.keys())[random.randint(0,len(choises)-1)]
     spiller2 = list(choises.keys())[random.randint(0,len(choises)-1)]
     while spiller1 == spiller2:
