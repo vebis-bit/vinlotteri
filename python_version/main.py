@@ -48,7 +48,6 @@ class MainWindow():
         
         
     def run_pygame(self):
-        self.input_box()
         button1 = self.make_button(" Start ", 600, 100)
         while True:
             for event in py.event.get():
@@ -131,3 +130,4 @@ class MainWindow():
 if __name__ == "__main__":
     main_window = MainWindow()
     main_window.run_pygame()
+    main_window.sys.exit()
