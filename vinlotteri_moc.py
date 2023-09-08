@@ -69,9 +69,11 @@ def chose_winner(font, screen, bg, width):
                     time.sleep(sleep)
                     choises.pop(key)
                     break
-        
-        elif teller % random.randint(3,15) == 0:
+
+        if teller % random.randint(3,9) == 0:
+            print("joker")
             joker_card(font, screen, bg, width, long_sleep)
+
         if NUMBERS < 3:
             for i in choises.values():
                 if len(i) > 0:
